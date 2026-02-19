@@ -1,0 +1,292 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 0 0% 100%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 3%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 100%;
+
+    /* Custom tokens */
+    --glass-bg: 0 0% 100% / 0.05;
+    --glass-border: 0 0% 100% / 0.1;
+    --glass-hover: 0 0% 100% / 0.12;
+    --text-dim: 0 0% 100% / 0.5;
+    --text-soft: 0 0% 100% / 0.75;
+    --overlay-dark: 0 0% 0% / 0.85;
+    --overlay-hero: linear-gradient(
+      to bottom,
+      hsl(0 0% 0% / 0.1) 0%,
+      hsl(0 0% 0% / 0.05) 30%,
+      hsl(0 0% 0% / 0.3) 60%,
+      hsl(0 0% 0% / 0.85) 100%
+    );
+
+    /* Status */
+    --status-available: 0 0% 100%;
+    --status-sold-out: 0 72% 51%;
+    --status-presale: 48 96% 53%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+}
+
+/* Ken Burns animation */
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate(-1%, -1%);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+@keyframes ken-burns-slow {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.04) translate(-0.5%, -0.5%);
+  }
+  100% {
+    transform: scale(1) translate(0, 0);
+  }
+}
+
+/* Scroll indicator bounce */
+@keyframes scroll-bounce {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+/* Shimmer for loading */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Nav link underline */
+@keyframes underline-in {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-[hsl(var(--glass-bg))] border border-[hsl(var(--glass-border))] rounded-lg backdrop-blur-md;
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    @apply bg-[hsl(var(--glass-hover))];
+    border-color: hsl(0 0% 100% / 0.18);
+    box-shadow: 0 0 20px hsl(0 0% 100% / 0.03);
+  }
+
+  .text-dim {
+    color: hsl(var(--text-dim));
+  }
+
+  .text-soft {
+    color: hsl(var(--text-soft));
+  }
+
+  .hero-overlay {
+    background: var(--overlay-hero);
+  }
+
+  .hero-overlay-cinematic {
+    background:
+      radial-gradient(ellipse at center, transparent 30%, hsl(0 0% 0% / 0.6) 100%),
+      linear-gradient(to bottom, hsl(0 0% 0% / 0.15) 0%, hsl(0 0% 0% / 0.05) 40%, hsl(0 0% 0% / 0.4) 70%, hsl(0 0% 0% / 0.92) 100%);
+  }
+
+  .ken-burns {
+    animation: ken-burns 25s ease-in-out infinite;
+  }
+
+  .ken-burns-slow {
+    animation: ken-burns-slow 40s ease-in-out infinite;
+  }
+
+  .scroll-indicator {
+    animation: scroll-bounce 2s ease-in-out infinite;
+  }
+
+  .nav-blur {
+    @apply backdrop-blur-xl border-b border-[hsl(var(--glass-border))] transition-all duration-500;
+  }
+
+  .nav-transparent {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .nav-solid {
+    background: hsl(0 0% 0% / 0.85);
+    border-color: hsl(0 0% 100% / 0.1);
+  }
+
+  .nav-link {
+    @apply relative text-sm font-medium uppercase tracking-wide transition-colors;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 w-full h-[2px] bg-foreground;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .nav-link-active::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold transition-all duration-200;
+  }
+
+  .btn-primary:hover {
+    @apply opacity-90;
+    transform: scale(0.98);
+  }
+
+  .btn-primary:active {
+    transform: scale(0.95);
+  }
+
+  .btn-secondary {
+    @apply glass-card px-6 py-3 rounded-full font-semibold text-foreground transition-all duration-200;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-[hsl(var(--glass-hover))];
+    transform: scale(0.98);
+  }
+
+  .label-tracking {
+    @apply text-xs font-semibold uppercase tracking-[0.15em];
+    font-family: 'Inter', sans-serif;
+  }
+
+  .status-available {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .status-sold-out {
+    @apply bg-[hsl(0_72%_51%/0.15)] text-[hsl(0_72%_51%)] border border-[hsl(0_72%_51%/0.25)];
+  }
+
+  .status-presale {
+    @apply bg-[hsl(48_96%_53%/0.15)] text-[hsl(48_96%_53%)] border border-[hsl(48_96%_53%/0.25)];
+  }
+
+  .hero-text-glow {
+    text-shadow: 0 0 40px hsl(0 0% 100% / 0.15), 0 4px 20px hsl(0 0% 0% / 0.5);
+  }
+
+  .hero-band-name {
+    text-shadow: 0 0 60px hsl(0 0% 100% / 0.08), 0 0 120px hsl(0 0% 100% / 0.03);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .image-fade-in {
+    @apply opacity-0 transition-opacity duration-700;
+  }
+
+  .image-fade-in.loaded {
+    @apply opacity-100;
+  }
+
+  .page-section {
+    @apply py-20 md:py-28 px-6;
+  }
+
+  .detail-hero {
+    @apply relative w-full h-[40vh] md:h-[50vh] overflow-hidden;
+  }
+
+  .detail-hero::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(to bottom, hsl(0 0% 0% / 0.3), hsl(0 0% 0% / 0.95));
+  }
+}
